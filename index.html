@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Empréstimos de Equipamentos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="cabecalho">
+    <div>
+      <h1>Empréstimos de Equipamentos</h1>
+      <p>Sistema de acompanhamento em tempo real</p>
+    </div>
+
+    <div class="conexao">
+      <span id="indicadorConexao" class="indicador offline"></span>
+      <span id="textoConexao">Conectando...</span>
+    </div>
+  </header>
+
+  <main class="conteudo">
+    <section class="resumo">
+      <article class="cartao">
+        <h2>Equipamentos</h2>
+        <p id="totalEquipamentos">0</p>
+      </article>
+
+      <article class="cartao">
+        <h2>Empréstimos pendentes</h2>
+        <p id="totalPendentes">0</p>
+      </article>
+
+      <article class="cartao">
+        <h2>Empréstimos em andamento</h2>
+        <p id="totalAndamento">0</p>
+      </article>
+
+      <article class="cartao">
+        <h2>Notificações não lidas</h2>
+        <p id="totalNotificacoes">0</p>
+      </article>
+    </section>
+
+    <section class="painel">
+      <div class="titulo-secao">
+        <h2>Empréstimos recentes</h2>
+        <button id="botaoAtualizar" type="button">Atualizar dados</button>
+      </div>
+
+      <p id="mensagemEmprestimos" class="mensagem">
+        Carregando empréstimos...
+      </p>
+
+      <div class="tabela-responsiva">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usuário</th>
+              <th>Equipamento</th>
+              <th>Status</th>
+              <th>Devolução prevista</th>
+            </tr>
+          </thead>
+          <tbody id="listaEmprestimos"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="painel">
+      <h2>Últimas notificações</h2>
+      <p id="mensagemNotificacoes" class="mensagem">
+        Carregando notificações...
+      </p>
+      <ul id="listaNotificacoes" class="lista-notificacoes"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Projeto acadêmico — Sistema de Empréstimos de Equipamentos</p>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
