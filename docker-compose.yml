@@ -1,0 +1,36 @@
+
+services:
+  banco:
+    image: postgres:16-alpine
+    container_name: emprestimos_banco
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: emprestimos
+      POSTGRES_USER: emprestimos
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-emprestimos_dev}
+    ports:
+      - "5433:5432"
+    volumes:
+      - dados_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U emprestimos -d emprestimos"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    container_name: emprestimos_api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://emprestimos:${DB_PASSWORD:-emprestimos_dev}@banco:5432/emprestimos?schema=public
+      SWAGGER_SERVER_URL: http://localhost:3000
+    depends_on:
+      banco:
+        condition: service_healthy
+
+volumes:
+  dados_postgres:
